@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">FilePicker</string>
+    <string name="view">View</string>
+    <string name="pick">Pick</string>
+
+    <string-array name="pickerOptions">
+        <item>File</item>
+        <item>Multiple File</item>
+        <item>Capture Image</item>
+        <item>Capture Video</item>
+    </string-array>
+
+    <string-array name="mimeTypeOptions">
+        <item>image/*</item>
+        <item>video/*</item>
+        <item>audio/*</item>
+        <item>application/pdf</item>
+        <item>*/*</item>
+    </string-array>
 </resources>
