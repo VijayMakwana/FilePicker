@@ -63,6 +63,7 @@ object FilePicker {
      */
     class PickFileStatuses : FileStatuses() {
         var mimeType: String = "*/*"
+        var mimeTypes: ArrayList<String> = arrayListOf()
 
         internal var onSuccess: ((file: File) -> Unit)? = null
 
@@ -77,6 +78,7 @@ object FilePicker {
      */
     class PickFileMultipleStatuses : FileStatuses() {
         var mimeType: String = "*/*"
+        var mimeTypes: ArrayList<String> = arrayListOf()
 
         internal var onSuccess: ((fileList: List<File>) -> Unit)? = null
 

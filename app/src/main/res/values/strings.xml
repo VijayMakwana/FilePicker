@@ -3,6 +3,7 @@
     <string name="view">View</string>
     <string name="pick">Pick</string>
     <string name="message_loading">Loading…</string>
+    <string name="select_mime_type">Select Mime Type</string>
 
     <string-array name="pickerOptions">
         <item>File</item>

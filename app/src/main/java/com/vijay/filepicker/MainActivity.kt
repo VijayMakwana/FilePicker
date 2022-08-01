@@ -1,10 +1,12 @@
 package com.vijay.filepicker
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import com.vijay.filepicker.utils.openFile
 import java.io.File
 
@@ -12,14 +14,17 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mButtonPickFile: Button
     private lateinit var mSpinnerFileType: Spinner
-    private lateinit var mSpinnerMimeType: Spinner
+    private lateinit var mButtonMimeType: Button
     private lateinit var mFileViewContainer: LinearLayout
 
     private var mSelectedFileTypePos = 0
-    private var mSelectedMimeTypePos = 0
+    private var mSelectedMimeType = arrayListOf<String>()
+
+    private var mMimeTypeAlert: AlertDialog? = null
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override
+    fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViews()
@@ -27,14 +32,25 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initViews() {
-
         mButtonPickFile = findViewById(R.id.btnPickFile)
         mSpinnerFileType = findViewById(R.id.spinnerFileType)
-        mSpinnerMimeType = findViewById(R.id.spinnerMimeType)
+        mButtonMimeType = findViewById(R.id.buttonMimeType)
         mFileViewContainer = findViewById(R.id.fileViewContainer)
 
         // setup file picker options
         setupDropDownOptions()
+
+        // setup Mime Type Popup
+        setupMimeTypePopup()
+
+        mButtonMimeType.setOnClickListener {
+            if (mMimeTypeAlert != null) {
+                mMimeTypeAlert?.show()
+            } else {
+                setupMimeTypePopup()
+                mMimeTypeAlert?.show()
+            }
+        }
 
         // add onClick for file pick
         mButtonPickFile.setOnClickListener {
@@ -42,6 +58,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Create Popup with Mime Type List
+     * User will select the Mime Type filter for File Picker
+     */
+    private fun setupMimeTypePopup() {
+        val array = resources.getStringArray(R.array.mimeTypeOptions)
+        val alertBuilder = AlertDialog.Builder(this)
+        alertBuilder.setTitle("Choose Mime Type")
+        alertBuilder.setMultiChoiceItems(
+            array,
+            null
+        ) { _, which: Int, isChecked: Boolean ->
+            if (isChecked) {
+                mSelectedMimeType.add(array[which])
+                mButtonMimeType.text = mSelectedMimeType.joinToString(separator = ",")
+            } else if (mSelectedMimeType.contains(array[which])) {
+                mSelectedMimeType.remove(array[which])
+            }
+        }
+        alertBuilder.setPositiveButton(
+            android.R.string.ok
+        ) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        mMimeTypeAlert = alertBuilder.create()
+    }
+
+    /**
+     * Create File Picker Drop Down
+     * One Or Multiple File Pick Or Capture Image Or Video
+     */
     private fun setupDropDownOptions() {
         ArrayAdapter.createFromResource(
             this,
@@ -52,17 +99,6 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
             mSpinnerFileType.adapter = adapter
-        }
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.mimeTypeOptions,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            mSpinnerMimeType.adapter = adapter
         }
 
         // add item selection listener so assign the selected position to 'mSelectedFileTypePos' field variable
@@ -77,20 +113,6 @@ class MainActivity : AppCompatActivity() {
                 mSelectedFileTypePos = position
                 handleMimeTypeVisibility()
             }
-
-        }
-
-        // add item selection listener so assign the selected position to 'mSelectedMimeTypePos' field variable
-        mSpinnerMimeType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                mSelectedMimeTypePos = position
-            }
         }
     }
 
@@ -101,10 +123,10 @@ class MainActivity : AppCompatActivity() {
     private fun handleMimeTypeVisibility() {
         when (mSelectedFileTypePos) {
             2, 3 -> {
-                mSpinnerMimeType.visibility = View.GONE
+                mButtonMimeType.visibility = View.GONE
             }
             else -> {
-                mSpinnerMimeType.visibility = View.VISIBLE
+                mButtonMimeType.visibility = View.VISIBLE
             }
         }
     }
@@ -180,7 +202,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun pickFile() {
         pickFile {
-            mimeType = mSpinnerMimeType.selectedItem.toString()
+            mimeTypes = mSelectedMimeType
             onSuccess { file ->
                 setFileViewUI(arrayListOf(file))
                 hideLoadingView()
@@ -204,7 +226,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun pickMultipleFile() {
         pickMultipleFile {
-            mimeType = mSpinnerMimeType.selectedItem.toString()
+            mimeTypes = mSelectedMimeType
             onSuccess { fileList ->
                 setFileViewUI(fileList)
                 hideLoadingView()
@@ -219,11 +241,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * show Loading State
+     */
     private fun showLoadingView() {
         mButtonPickFile.isEnabled = false
         mButtonPickFile.text = getString(R.string.message_loading)
     }
 
+    /**
+     * hide Loading State
+     */
     private fun hideLoadingView() {
         mButtonPickFile.isEnabled = true
         mButtonPickFile.text = getString(R.string.pick)

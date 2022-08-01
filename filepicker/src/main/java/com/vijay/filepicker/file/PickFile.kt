@@ -24,7 +24,13 @@ class PickFile(
     fun dispatchPickFileIntent(mFileStatus: FilePicker.PickFileStatuses?) {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = mFileStatus?.mimeType
+            if (mFileStatus?.mimeTypes.isNullOrEmpty().not()) {
+                val s: Array<String>? = mFileStatus?.mimeTypes?.toTypedArray()
+                type = "*/*"
+                putExtra(Intent.EXTRA_MIME_TYPES, s)
+            } else {
+                type = mFileStatus?.mimeType
+            }
         }
         try {
             fragment.startActivityForResult(intent, FilePickerFragment.REQ_FILE)
