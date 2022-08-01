@@ -37,7 +37,7 @@ class CaptureVideo(private val fragment: Fragment) {
                     videoFile?.also { file ->
                         val videoURI: Uri = FileProvider.getUriForFile(
                             ctx,
-                            "com.vijay.filepicker.provider",
+                            "${fragment.context?.packageName}.provider",
                             file
                         )
                         /**

@@ -101,11 +101,6 @@ class FilePickerFragment : Fragment(), CoroutineScope {
                     pickMultipleFileObj?.onActivityResult(data, mPickMultipleFileStatus)
                 }
             }
-        } else {
-            mPickFileStatus?.onError?.invoke(requireActivity().getString(R.string.message_error_oops))
-            mImageCaptureStatus?.onError?.invoke(requireActivity().getString(R.string.message_error_oops))
-            mVideoCaptureStatus?.onError?.invoke(requireActivity().getString(R.string.message_error_oops))
-            mPickMultipleFileStatus?.onError?.invoke(requireActivity().getString(R.string.message_error_oops))
         }
     }
 
