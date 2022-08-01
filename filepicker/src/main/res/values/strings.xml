@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FilePicker</string>
+    <string name="message_error_oops">Oops! Somethings wrong, Please try again</string>
+</resources>

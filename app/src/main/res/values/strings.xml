@@ -2,6 +2,7 @@
     <string name="app_name">FilePicker</string>
     <string name="view">View</string>
     <string name="pick">Pick</string>
+    <string name="message_loading">Loading…</string>
 
     <string-array name="pickerOptions">
         <item>File</item>
