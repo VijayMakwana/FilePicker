@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.vijay.filepicker.FilePicker
 import com.vijay.filepicker.FilePickerFragment
 import com.vijay.filepicker.utils.createFile
-import com.vijay.filepicker.utils.showToast
 import java.io.File
 import java.io.IOException
 
@@ -38,7 +37,7 @@ class CaptureImage(private val fragment: Fragment) {
                     photoFile?.also { file ->
                         val photoURI: Uri = FileProvider.getUriForFile(
                             ctx,
-                            "com.vijay.filepicker.provider",
+                            "${fragment.context?.packageName}.provider",
                             file
                         )
                         /**

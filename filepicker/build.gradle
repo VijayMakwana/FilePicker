@@ -49,7 +49,7 @@ afterEvaluate {
 
                 groupId = 'com.github.VijayMakwana'
                 artifactId = 'FilePicker'
-                version = '0.0.1'
+                version = '0.0.2'
             }
         }
     }
