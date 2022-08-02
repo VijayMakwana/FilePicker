@@ -24,21 +24,20 @@ class FilePickerFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
+    private var mPickFileStatus: FilePicker.PickFileStatuses? = null
+    private var mPickMultipleFileStatus: FilePicker.PickFileMultipleStatuses? = null
+    private var mImageCaptureStatus: FilePicker.ImageCaptureStatuses? = null
+    private var mVideoCaptureStatus: FilePicker.VideoCaptureStatuses? = null
+
     companion object {
-        private var mPickFileStatus: FilePicker.PickFileStatuses? = null
-        private var mPickMultipleFileStatus: FilePicker.PickFileMultipleStatuses? = null
-        private var mImageCaptureStatus: FilePicker.ImageCaptureStatuses? = null
-        private var mVideoCaptureStatus: FilePicker.VideoCaptureStatuses? = null
+        private const val ARG_KEY_FILE_STATUSES = "ARG_KEY_FileStatues"
 
         fun newInstance(fileStatuses: FilePicker.FileStatuses): FilePickerFragment {
-            when (fileStatuses) {
-                is FilePicker.PickFileStatuses -> mPickFileStatus = fileStatuses
-                is FilePicker.PickFileMultipleStatuses -> mPickMultipleFileStatus = fileStatuses
-                is FilePicker.ImageCaptureStatuses -> mImageCaptureStatus = fileStatuses
-                is FilePicker.VideoCaptureStatuses -> mVideoCaptureStatus = fileStatuses
+            val filePickerFragment = FilePickerFragment()
+            filePickerFragment.arguments = Bundle().apply {
+                putParcelable(ARG_KEY_FILE_STATUSES, fileStatuses)
             }
-
-            return FilePickerFragment()
+            return filePickerFragment
         }
 
         const val REQ_FILE = 113
@@ -55,6 +54,16 @@ class FilePickerFragment : Fragment(), CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         job = Job()
+        arguments?.let { args ->
+            when (val fileStatuses =
+                args.getParcelable<FilePicker.FileStatuses>(ARG_KEY_FILE_STATUSES)) {
+                is FilePicker.PickFileStatuses -> mPickFileStatus = fileStatuses
+                is FilePicker.PickFileMultipleStatuses -> mPickMultipleFileStatus = fileStatuses
+                is FilePicker.ImageCaptureStatuses -> mImageCaptureStatus = fileStatuses
+                is FilePicker.VideoCaptureStatuses -> mVideoCaptureStatus = fileStatuses
+            }
+        }
+
     }
 
     fun pickFile() {
@@ -101,6 +110,11 @@ class FilePickerFragment : Fragment(), CoroutineScope {
                     pickMultipleFileObj?.onActivityResult(data, mPickMultipleFileStatus)
                 }
             }
+        } else {
+            mPickFileStatus?.onError?.invoke(getString(R.string.message_user_cancelled))
+            mPickMultipleFileStatus?.onError?.invoke(getString(R.string.message_user_cancelled))
+            mImageCaptureStatus?.onError?.invoke(getString(R.string.message_user_cancelled))
+            mVideoCaptureStatus?.onError?.invoke(getString(R.string.message_user_cancelled))
         }
     }
 

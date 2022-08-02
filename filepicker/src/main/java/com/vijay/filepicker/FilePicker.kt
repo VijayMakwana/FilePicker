@@ -1,7 +1,10 @@
 package com.vijay.filepicker
 
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import java.io.File
 
 /**
@@ -20,8 +23,12 @@ object FilePicker {
     /**
      * General class for file statuses functions
      */
-    open class FileStatuses {
+    @Parcelize
+    open class FileStatuses : Parcelable {
+        @IgnoredOnParcel
         internal var onError: ((message: String) -> Unit)? = null
+
+        @IgnoredOnParcel
         internal var onLoading: (() -> Unit)? = null
 
         //DSL

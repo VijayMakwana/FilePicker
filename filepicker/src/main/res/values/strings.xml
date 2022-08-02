@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FilePicker</string>
+    <string name="message_user_cancelled">User cancelled operation</string>
 </resources>
