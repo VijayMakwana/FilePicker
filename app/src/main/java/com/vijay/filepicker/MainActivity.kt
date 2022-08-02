@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         initViews()
     }
 
-
     private fun initViews() {
         mButtonPickFile = findViewById(R.id.btnPickFile)
         mSpinnerFileType = findViewById(R.id.spinnerFileType)
@@ -75,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 mButtonMimeType.text = mSelectedMimeType.joinToString(separator = ",")
             } else if (mSelectedMimeType.contains(array[which])) {
                 mSelectedMimeType.remove(array[which])
+                mButtonMimeType.text = mSelectedMimeType.joinToString(separator = ",")
             }
         }
         alertBuilder.setPositiveButton(
@@ -162,9 +162,9 @@ class MainActivity : AppCompatActivity() {
                 hideLoadingView()
             }
             onError {
+                Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
                 hideLoadingView()
             }
-
             onLoading {
                 showLoadingView()
             }
@@ -184,9 +184,9 @@ class MainActivity : AppCompatActivity() {
                 hideLoadingView()
             }
             onError {
+                Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
                 hideLoadingView()
             }
-
             onLoading {
                 showLoadingView()
             }
@@ -208,9 +208,9 @@ class MainActivity : AppCompatActivity() {
                 hideLoadingView()
             }
             onError {
+                Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
                 hideLoadingView()
             }
-
             onLoading {
                 showLoadingView()
             }
@@ -232,9 +232,9 @@ class MainActivity : AppCompatActivity() {
                 hideLoadingView()
             }
             onError {
+                Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
                 hideLoadingView()
             }
-
             onLoading {
                 showLoadingView()
             }

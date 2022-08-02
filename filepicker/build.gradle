@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'maven-publish'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -49,7 +50,7 @@ afterEvaluate {
 
                 groupId = 'com.github.VijayMakwana'
                 artifactId = 'FilePicker'
-                version = '0.0.2'
+                version = '0.0.3'
             }
         }
     }
