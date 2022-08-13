@@ -109,7 +109,7 @@ other files)
 
   ```kotlin     
   pickFile {
-  			mimeTypes = arrayListOf("image/*", "video/*")
+  mimeTypes = arrayListOf("image/*", "video/*")
             onSuccess { file ->
                 // Here is your picked file
             }
