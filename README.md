@@ -1,8 +1,8 @@
 # FilePicker [![](https://jitpack.io/v/VijayMakwana/FilePicker.svg)](https://jitpack.io/#VijayMakwana/FilePicker) [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](https://opensource.org/licenses/Apache-2.0)
 
-**Open camera app for capture photo or videos without asking any Camera or Storage Permission and
+*Open camera app for capture photo or videos without asking any Camera or Storage Permission and
 receive the captured file. Open gallery and pick one or multiple files without asking storage
-permission. Apply mime type filters for picking files from gallery**
+permission. Apply mime type filters for picking files from gallery*
 
 - Written in [**Kotlin**](http://kotlinlang.org)
 
@@ -47,7 +47,7 @@ Open Camera and capture Image
             onSuccess { file ->
                 // Here is your captured Image
             }
-            onError { errorMessage->
+            onError { errorMessage ->
                 // You can show error message
             }
             onLoading {
@@ -63,7 +63,7 @@ Open Camera and capture Video
             onSuccess { file ->
                 // Here is your captured Video File
             }
-            onError { errorMessage->
+            onError { errorMessage ->
                 // You can show error message
             }
             onLoading {
@@ -79,7 +79,7 @@ Open gallery and pick file
             onSuccess { file ->
                 // Here is your picked file
             }
-            onError { errorMessage->
+            onError { errorMessage ->
                 // You can show error message
             }
             onLoading {
@@ -95,7 +95,7 @@ Open gallery and pick multiple file
             onSuccess { fileList: List<File> ->
                 // Here is your picked files
             }
-            onError { errorMessage->
+            onError { errorMessage ->
                 // You can show error message
             }
             onLoading {
@@ -109,11 +109,11 @@ other files)
 
   ```kotlin     
   pickFile {
-  					mimeTypes = arrayListOf("image/*", "video/*")
+            mimeTypes = arrayListOf("image/*", "video/*")
             onSuccess { file ->
                 // Here is your picked file
             }
-            onError { errorMessage->
+            onError { errorMessage ->
                 // You can show error message
             }
             onLoading {
