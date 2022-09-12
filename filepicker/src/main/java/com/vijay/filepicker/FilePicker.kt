@@ -158,11 +158,10 @@ private fun FragmentActivity.initiateMultipleFilePicker(
     val fileStatuses = FilePicker.PickFileMultipleStatuses().apply(func)
     var filePickerFragment =
         supportFragmentManager.findFragmentByTag(FilePicker.MULTIPLE_FILE_PICKER_TAG) as? FilePickerFragment
-    if (filePickerFragment !is FilePickerFragment) {
-        filePickerFragment = FilePickerFragment.newInstance(fileStatuses)
-        supportFragmentManager.beginTransaction()
-            .add(filePickerFragment, FilePicker.MULTIPLE_FILE_PICKER_TAG).commitNow()
-    }
+    if (filePickerFragment != null) supportFragmentManager.fragments.clear()
+    filePickerFragment = FilePickerFragment.newInstance(fileStatuses)
+    supportFragmentManager.beginTransaction()
+        .add(filePickerFragment, FilePicker.MULTIPLE_FILE_PICKER_TAG).commitNow()
 
     filePickerFragment.pickMultipleFile()
 
@@ -195,11 +194,10 @@ private fun FragmentActivity.initiateImageCapture(
     val fileStatuses = FilePicker.ImageCaptureStatuses().apply(func)
     var filePickerFragment =
         supportFragmentManager.findFragmentByTag(FilePicker.IMAGE_CAPTURE_TAG) as? FilePickerFragment
-    if (filePickerFragment !is FilePickerFragment) {
-        filePickerFragment = FilePickerFragment.newInstance(fileStatuses)
-        supportFragmentManager.beginTransaction()
-            .add(filePickerFragment, FilePicker.IMAGE_CAPTURE_TAG).commitNow()
-    }
+    if (filePickerFragment != null) supportFragmentManager.fragments.clear()
+    filePickerFragment = FilePickerFragment.newInstance(fileStatuses)
+    supportFragmentManager.beginTransaction()
+        .add(filePickerFragment, FilePicker.IMAGE_CAPTURE_TAG).commitNow()
 
     filePickerFragment.captureImage()
 
@@ -232,11 +230,11 @@ private fun FragmentActivity.initiateVideoCapture(
     val fileStatuses = FilePicker.VideoCaptureStatuses().apply(func)
     var filePickerFragment =
         supportFragmentManager.findFragmentByTag(FilePicker.VIDEO_CAPTURE_TAG) as? FilePickerFragment
-    if (filePickerFragment !is FilePickerFragment) {
-        filePickerFragment = FilePickerFragment.newInstance(fileStatuses)
-        supportFragmentManager.beginTransaction()
-            .add(filePickerFragment, FilePicker.VIDEO_CAPTURE_TAG).commitNow()
-    }
+    if (filePickerFragment != null) supportFragmentManager.fragments.clear()
+    filePickerFragment = FilePickerFragment.newInstance(fileStatuses)
+    supportFragmentManager.beginTransaction()
+        .add(filePickerFragment, FilePicker.VIDEO_CAPTURE_TAG).commitNow()
+
 
     filePickerFragment.captureVideo()
 
