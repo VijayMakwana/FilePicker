@@ -34,7 +34,7 @@ Then, add the library to your module `build.gradle`
 
   ```
   dependencies {
-   implementation 'com.github.VijayMakwana:FilePicker:0.0.4'
+   implementation 'com.github.VijayMakwana:FilePicker:0.0.5'
   }
   ```
 
